@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #f0f2f5;
+  color: #2c3e50;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-1.5 rounded text-sm font-medium transition-colors cursor-pointer border-0;
+  }
+  .btn-primary {
+    @apply btn bg-crm-primary text-white hover:bg-crm-primary-dark;
+  }
+  .btn-success {
+    @apply btn bg-crm-success text-white hover:opacity-90;
+  }
+  .btn-danger {
+    @apply btn bg-crm-danger text-white hover:opacity-90;
+  }
+  .btn-secondary {
+    @apply btn bg-[#9e9e9e] text-white hover:opacity-90;
+  }
+  .btn-white {
+    @apply btn bg-white text-crm-text border border-crm-border hover:bg-crm-bg;
+  }
+
+  .card {
+    @apply bg-white rounded-lg border border-crm-border shadow-sm;
+  }
+
+  .input {
+    @apply w-full border border-crm-border rounded px-3 py-1.5 text-sm text-crm-text
+           focus:outline-none focus:border-crm-primary focus:ring-2 focus:ring-crm-primary/20
+           bg-white placeholder-crm-subtle;
+  }
+
+  .select {
+    @apply input cursor-pointer;
+  }
+
+  .table-header {
+    @apply text-left text-xs font-semibold text-crm-muted uppercase tracking-wider
+           bg-crm-bg-light border-b border-crm-border pb-2 pr-4;
+  }
+
+  .table-row {
+    @apply border-b border-crm-border last:border-0 hover:bg-[#eff6ff] transition-colors;
+  }
+
+  .table-cell {
+    @apply py-2 pr-4 text-sm text-crm-text;
+  }
+
+  .badge {
+    @apply px-2 py-0.5 rounded text-xs font-medium;
+  }
+}

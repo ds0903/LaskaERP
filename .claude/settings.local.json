@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree -L 3 /c/Users/1/PycharmProjects/laskaerp --dirsfirst --ignore .venv 2>/dev/null || find /c/Users/1/PycharmProjects/laskaerp -not -path \"*/.venv/*\" -type f -o -not -path \"*/.venv/*\" -type d | head -60)",
+      "Bash(ls -la /c/Users/1/PycharmProjects/laskaerp | grep -v \"^d.*\\\\.$\")",
+      "Bash(mkdir -p /c/Users/1/PycharmProjects/laskaerp/backend/app/models /c/Users/1/PycharmProjects/laskaerp/backend/app/routers /c/Users/1/PycharmProjects/laskaerp/backend/app/schemas /c/Users/1/PycharmProjects/laskaerp/backend/app/services /c/Users/1/PycharmProjects/laskaerp/backend/alembic/versions && mkdir -p /c/Users/1/PycharmProjects/laskaerp/frontend/src/pages /c/Users/1/PycharmProjects/laskaerp/frontend/src/components/warehouse /c/Users/1/PycharmProjects/laskaerp/frontend/src/api && echo \"dirs created\")",
+      "Bash(rustc --version 2>/dev/null && cargo --version 2>/dev/null && node --version 2>/dev/null && npm --version 2>/dev/null && python --version 2>/dev/null || python3 --version 2>/dev/null)",
+      "Bash(rustc --version; cargo --version; node --version; npm --version; python --version)"
+    ]
+  }
+}

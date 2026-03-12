@@ -1,0 +1,20 @@
+Python  → FastAPI (бекенд, логіка, БД)
+JS      → React (весь UI)
+Rust    → 20-50 рядків шаблону Tauri (копіпаст з доків)
+
+cd C:\Users\1\PycharmProjects\laskaerp\backend
+cd C:\Users\1\PycharmProjects\laskaerp\frontend
+
+  Крок 4 — Запусти бекенд:
+  uvicorn main:app --reload
+  Має побачити: Uvicorn running on http://127.0.0.1:8000
+
+  ---
+  Крок 5 — Новий термінал, запусти фронтенд:
+  cd C:\Users\1\PycharmProjects\laskaerp\frontend
+  npm install
+  npm run dev
+
+  ---
+  Крок 6 — Відкрий браузер:
+  http://localhost:5173
