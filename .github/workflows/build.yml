@@ -1,9 +1,10 @@
 name: Build LaskaERP
 
 on:
+  workflow_dispatch:   # тільки вручну через кнопку на GitHub
   push:
-    branches: [main, master]
-  workflow_dispatch:   # кнопка ручного запуску на GitHub
+    tags:
+      - 'v*'           # або коли пушиш тег: git tag v1.0 && git push --tags
 
 jobs:
   build:
@@ -55,8 +56,7 @@ jobs:
           Copy-Item "backend/dist/server.exe" "src-tauri/binaries/server-$Triple.exe" -Force
 
       - name: Build Tauri app
-        working-directory: frontend
-        run: npx tauri build
+        run: npx --prefix frontend tauri build
         env:
           CARGO_TARGET_DIR: ${{ github.workspace }}/src-tauri/target
 
