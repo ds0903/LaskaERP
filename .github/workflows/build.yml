@@ -1,10 +1,10 @@
 name: Build LaskaERP
 
 on:
-  workflow_dispatch:   # тільки вручну через кнопку на GitHub
+  workflow_dispatch:
   push:
     tags:
-      - 'v*'           # або коли пушиш тег: git tag v1.0 && git push --tags
+      - 'v*'
 
 jobs:
   build:
@@ -39,11 +39,11 @@ jobs:
         working-directory: frontend
         run: npm run build
 
-      - name: Install Python deps + PyInstaller
+      - name: Install Python deps
         working-directory: backend
         run: pip install -r requirements.txt
 
-      - name: Build backend EXE (sidecar)
+      - name: Build backend EXE
         working-directory: backend
         run: pyinstaller server.spec --noconfirm
 
@@ -51,25 +51,15 @@ jobs:
         shell: pwsh
         run: |
           $Triple = (rustc -vV | Select-String "host:").ToString().Split(":")[1].Trim()
-          Write-Host "Target triple: $Triple"
-          New-Item -ItemType Directory -Force -Path "src-tauri/binaries"
+          New-Item -ItemType Directory -Force -Path "src-tauri/binaries" | Out-Null
           Copy-Item "backend/dist/server.exe" "src-tauri/binaries/server-$Triple.exe" -Force
+          Write-Host "Copied sidecar: server-$Triple.exe"
 
-      - name: Generate placeholder icons
+      - name: Generate icons
         shell: pwsh
         run: |
           pip install pillow
-          python -c "
-from PIL import Image
-import os
-os.makedirs('src-tauri/icons', exist_ok=True)
-img = Image.new('RGBA', (512, 512), (52, 152, 219, 255))
-img.save('src-tauri/icons/512x512.png')
-for size, name in [(32,'32x32'),(128,'128x128'),(256,'128x128@2x')]:
-    img.resize((size,size), Image.LANCZOS).save(f'src-tauri/icons/{name}.png')
-img.resize((256,256), Image.LANCZOS).save('src-tauri/icons/icon.ico')
-print('Icons generated')
-"
+          python generate_icons.py
 
       - name: Build Tauri app
         run: npx --prefix frontend tauri build
