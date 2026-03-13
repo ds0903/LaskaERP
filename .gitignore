@@ -17,3 +17,5 @@ src-tauri/target/
 .idea/
 *.iml
 info.txt
+/.claude/
+.idea
