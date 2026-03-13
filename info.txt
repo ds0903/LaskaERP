@@ -18,3 +18,29 @@ cd C:\Users\1\PycharmProjects\laskaerp\frontend
   ---
   Крок 6 — Відкрий браузер:
   http://localhost:5173
+
+   Тепер запускай збірку покроково:
+
+  Крок 1 — збери фронтенд:
+  cd C:\Users\1\PycharmProjects\laskaerp\frontend
+  npm run build
+
+  Крок 2 — збери бекенд (новий термінал з .venv):
+  cd C:\Users\1\PycharmProjects\laskaerp\backend
+  pyinstaller server.spec --noconfirm
+
+  Крок 3 — скопіюй sidecar:
+  $env:PATH += ";$env:USERPROFILE\.rustup\toolchains\stable-x86_64-pc-windows-msvc\bin"
+  $Triple = (rustc -vV | Select-String "host:").ToString().Split(":")[1].Trim()
+  Copy-Item "dist\server.exe" "..\src-tauri\binaries\server-$Triple.exe" -Force
+
+  Крок 4 — збери Tauri:
+  Set-MpPreference -DisableRealtimeMonitoring $true
+
+  Потім збірка:
+  $env:CARGO_TARGET_DIR = "C:\Users\1\PycharmProjects\laskaerp\src-tauri\target"
+  $env:PATH += ";$env:USERPROFILE\.rustup\toolchains\stable-x86_64-pc-windows-msvc\bin"
+  .\frontend\node_modules\.bin\tauri build
+
+  Після завершення — знову ввімкни:
+  Set-MpPreference -DisableRealtimeMonitoring $false
