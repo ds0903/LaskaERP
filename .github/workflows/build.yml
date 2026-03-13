@@ -59,7 +59,21 @@ jobs:
         shell: pwsh
         run: |
           pip install pillow
-          python generate_icons.py
+          $source = if (Test-Path "src-tauri/icons/icon.png") { "src-tauri/icons/icon.png" } else { $null }
+          $code = @"
+from PIL import Image
+import os
+os.makedirs("src-tauri/icons", exist_ok=True)
+src = r"$source"
+img = Image.open(src).convert("RGBA") if src and os.path.exists(src) else Image.new("RGBA", (512, 512), (52, 152, 219, 255))
+img.resize((512, 512), Image.LANCZOS).save("src-tauri/icons/512x512.png")
+img.resize((256, 256), Image.LANCZOS).save("src-tauri/icons/128x128@2x.png")
+img.resize((128, 128), Image.LANCZOS).save("src-tauri/icons/128x128.png")
+img.resize((32, 32),   Image.LANCZOS).save("src-tauri/icons/32x32.png")
+img.resize((256, 256), Image.LANCZOS).save("src-tauri/icons/icon.ico")
+print("Icons OK")
+"@
+          $code | python
 
       - name: Build Tauri app
         run: npx --prefix frontend tauri build
