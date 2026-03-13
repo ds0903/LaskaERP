@@ -55,6 +55,22 @@ jobs:
           New-Item -ItemType Directory -Force -Path "src-tauri/binaries"
           Copy-Item "backend/dist/server.exe" "src-tauri/binaries/server-$Triple.exe" -Force
 
+      - name: Generate placeholder icons
+        shell: pwsh
+        run: |
+          pip install pillow
+          python -c "
+from PIL import Image
+import os
+os.makedirs('src-tauri/icons', exist_ok=True)
+img = Image.new('RGBA', (512, 512), (52, 152, 219, 255))
+img.save('src-tauri/icons/512x512.png')
+for size, name in [(32,'32x32'),(128,'128x128'),(256,'128x128@2x')]:
+    img.resize((size,size), Image.LANCZOS).save(f'src-tauri/icons/{name}.png')
+img.resize((256,256), Image.LANCZOS).save('src-tauri/icons/icon.ico')
+print('Icons generated')
+"
+
       - name: Build Tauri app
         run: npx --prefix frontend tauri build
         env:
